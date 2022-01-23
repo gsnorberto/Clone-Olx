@@ -1,3 +1,5 @@
+//Criação para uma eventual necessidade futura.
+
 const initialState = {
    email:''
 }
