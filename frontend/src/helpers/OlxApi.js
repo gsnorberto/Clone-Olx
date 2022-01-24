@@ -7,6 +7,7 @@ import qs from 'qs'
 const BASEAPI = 'http://alunos.b7web.com.br:501'
 
 // ************* REQUISIÇÕES POST ***************
+// Login e Cadastro
 const apiFetchPost = async (endpoint, body) => {
    //Verifica se o usuário tem algum token no Cookie
    if(!body.token){
@@ -38,6 +39,7 @@ const apiFetchPost = async (endpoint, body) => {
 }
 
 // ************* REQUISIÇÕES GET ***************
+// Obter Estados
 const apiFetchGet = async (endpoint, body = []) => {
    //Verifica se o usuário tem algum token no Cookie
    if(!body.token){
@@ -69,6 +71,19 @@ const OlxApi = {
          {email, password}
       );
       return json;
+   },
+   register: async (name, email, password, stateLoc) => {
+      const json = await apiFetchPost(
+         '/user/signup',
+         {name, email, password, state: stateLoc}
+      );
+      return json;
+   },
+   getStates: async () => { //Obter os Estados do Brasil
+      const json = await apiFetchGet(
+         '/states'
+      );
+      return json.states;
    }
 };
 
