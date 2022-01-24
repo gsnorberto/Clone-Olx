@@ -2,10 +2,17 @@ import React from "react";
 import { HeaderArea } from './styled';
 import { Link } from "react-router-dom"
 
-import { isLogged } from "../../../helpers/AuthHandler"
+import { isLogged, doLogout } from "../../../helpers/AuthHandler"
 
 const Header = () => {
    let logged = isLogged();
+
+   //Sair da conta.
+   //Remove o Cookie e redireciona para a Home
+   const handleLogout = () => {
+      doLogout();
+      window.location.href = '/'
+   }
 
    return (
       <HeaderArea>
@@ -19,19 +26,21 @@ const Header = () => {
             </div>
             <nav>
                <ul>
+                  {/* Usuário está logado */}
                   {logged &&
                      <>
                         <li>
                            <Link to="/my-account">Minha Conta</Link>
                         </li>
                         <li>
-                           <Link to="/logout">Sair</Link>
+                           <button onClick={handleLogout}>Sair</button>
                         </li>
                         <li>
                            <Link to="/post-an-ad" className="button">Postar Anúncio</Link>
                         </li>
                      </>
                   }
+                  {/* Usuário NÃO está logado */}
                   {!logged &&
                      <>
                         <li>
@@ -45,8 +54,6 @@ const Header = () => {
                         </li>
                      </>
                   }
-
-
                </ul>
             </nav>
          </div>

@@ -18,6 +18,9 @@ Instalação de js-cokies
 (Utilizado para verificar através de token se o usuário está ou não logado)
 - npm install js-cookie --save (criar, remover, setar cookies)
 
+Query String
+- npm install qs --save (utilizado no OlxApi) (recebe um objeto e transforma em querystring)
+
 
 # Uso do Redux nesse Projeto
 - Esse projeto não necessita do uso do redux pois não vai ficar trocando informações entre telas. A maioria das coisas virão do WebService.
