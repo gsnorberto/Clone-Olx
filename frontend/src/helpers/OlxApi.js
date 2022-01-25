@@ -7,7 +7,7 @@ import qs from 'qs'
 const BASEAPI = 'http://alunos.b7web.com.br:501'
 
 // ************* REQUISIÇÕES POST ***************
-// Login e Cadastro
+// Login e Cadastro de novos usuários
 const apiFetchPost = async (endpoint, body) => {
    //Verifica se o usuário tem algum token no Cookie
    if(!body.token){
@@ -31,7 +31,7 @@ const apiFetchPost = async (endpoint, body) => {
 
    // Caso o usuário não esteja autorizado, ele é direcionado para página de login
    if(json.notallowed){
-      window.location.href = '/signin'
+      window.location.href = '/signin' //redireciona a página atualizando a mesma
       return
    }
 
@@ -64,6 +64,7 @@ const apiFetchGet = async (endpoint, body = []) => {
 }
 
 const OlxApi = {
+   // Fazer Login
    login: async (email, password) => {
       //Faz consulta a WebService
       const json = await apiFetchPost(
@@ -72,6 +73,7 @@ const OlxApi = {
       );
       return json;
    },
+   //Cadastrar usuário
    register: async (name, email, password, stateLoc) => {
       const json = await apiFetchPost(
          '/user/signup',
@@ -79,11 +81,27 @@ const OlxApi = {
       );
       return json;
    },
+   //Lista de Estados
    getStates: async () => { //Obter os Estados do Brasil
       const json = await apiFetchGet(
          '/states'
       );
       return json.states;
+   },
+   //Lista de categorias. Ex: Eletronic, baby, etc
+   getCategories: async () => {
+      const json = await apiFetchGet(
+         '/categories',
+      );
+      return json.categories;
+   },
+   //Lista de items de anúncio
+   getAds: async (options) => {
+      const json = await apiFetchGet(
+         '/ad/list',
+         options
+      );
+      return json;
    }
 };
 

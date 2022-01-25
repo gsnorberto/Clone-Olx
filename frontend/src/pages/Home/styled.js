@@ -47,8 +47,53 @@ export const SearchArea = styled.div`
          }
       }
    }
+
+   .categoryList {
+      display: flex;
+      flex-wrap: wrap;
+      margin-top: 20px;
+
+      .categoryItem{
+         width: 25%;
+         display: flex;
+         align-items: center;
+         color: #000000;
+         text-decoration: none;
+         height: 50px;
+         margin-bottom: 10px;
+
+         &:hover{
+            color: #999999;
+         }
+
+         img{
+            width: 45px;
+            height: 45px;
+            margin-right: 10px;
+         }
+      }
+   }
 `
 
 export const PageArea = styled.div`
-   
+   h2 {
+      font-size: 20px;
+   }
+
+   .list {
+      display: flex;
+      flex-wrap: wrap;
+
+      .aditem{
+         width: 25%;
+      }
+   }
+
+   .seeAllLink{
+      color: #000000;
+      text-decoration: none;
+      font-weight: bold;
+      display: inline-block;
+      margin-top: 10px;
+   }
 `;
