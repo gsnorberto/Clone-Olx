@@ -21,6 +21,9 @@ Instalação de js-cokies
 Query String
 - npm install qs --save (utilizado no OlxApi) (recebe um objeto e transforma em querystring)
 
+Slide Show
+- npm install react-slideshow-image --save
+
 
 # Uso do Redux nesse Projeto
 - Esse projeto não necessita do uso do redux pois não vai ficar trocando informações entre telas. A maioria das coisas virão do WebService.
