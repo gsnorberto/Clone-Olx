@@ -6,31 +6,32 @@ import qs from 'qs'
 
 const BASEAPI = 'http://alunos.b7web.com.br:501'
 
-// ************* REQUISIÇÕES POST ***************
+// *********************************************
+// ************ REQUISIÇÕES POST **************
 // Login e Cadastro de novos usuários
 const apiFetchPost = async (endpoint, body) => {
    //Verifica se o usuário tem algum token no Cookie
-   if(!body.token){
+   if (!body.token) {
       let token = Cookies.get('token');
-      if(token){
+      if (token) {
          body.token = token;
       }
    }
 
    //Requisição
-   const res = await fetch(BASEAPI+endpoint, {
+   const res = await fetch(BASEAPI + endpoint, {
       method: 'POST',
       headers: {
          'Accept': 'application/json',
          'Content-Type': 'application/json'
       },
-      body:JSON.stringify(body)
+      body: JSON.stringify(body)
    })
    //Resposta
    const json = await res.json();
 
    // Caso o usuário não esteja autorizado, ele é direcionado para página de login
-   if(json.notallowed){
+   if (json.notallowed) {
       window.location.href = '/signin' //redireciona a página atualizando a mesma
       return
    }
@@ -38,25 +39,54 @@ const apiFetchPost = async (endpoint, body) => {
    return json;
 }
 
+// *********************************************
 // ************* REQUISIÇÕES GET ***************
 // Obter Estados
 const apiFetchGet = async (endpoint, body = []) => {
    //Verifica se o usuário tem algum token no Cookie
-   if(!body.token){
+   if (!body.token) {
       let token = Cookies.get('token');
-      if(token){
+      if (token) {
          body.token = token;
       }
    }
 
    //Requisição
-   const res = await fetch(`${BASEAPI+endpoint}?${qs.stringify(body)}`) //qs = recebe um objeto e transforma em querystring
+   const res = await fetch(`${BASEAPI + endpoint}?${qs.stringify(body)}`) //qs = recebe um objeto e transforma em querystring
    //Resposta
    const json = await res.json();
 
    // Caso o usuário não esteja autorizado, ele é direcionado para página de login
-   if(json.notallowed){
+   if (json.notallowed) {
       window.location.href = '/signin'
+      return
+   }
+
+   return json;
+}
+
+// *********************************************
+// ******* REQUISIÇÃO POST COM ARQUIVO *********
+const apiFetchFile = async (endpoint, body) => {
+   //Verifica se o usuário tem algum token no Cookie
+   if (!body.token) {
+      let token = Cookies.get('token');
+      if (token) {
+         body.append('token', token);
+      }
+   }
+
+   //Requisição
+   const res = await fetch(BASEAPI + endpoint, {
+      method: 'POST',
+      body
+   });
+   //Resposta
+   const json = await res.json();
+
+   // Caso o usuário não esteja autorizado, ele é direcionado para página de login
+   if (json.notallowed) {
+      window.location.href = '/signin' //redireciona a página atualizando a mesma
       return
    }
 
@@ -69,7 +99,7 @@ const OlxApi = {
       //Faz consulta a WebService
       const json = await apiFetchPost(
          '/user/signin',
-         {email, password}
+         { email, password }
       );
       return json;
    },
@@ -77,7 +107,7 @@ const OlxApi = {
    register: async (name, email, password, stateLoc) => {
       const json = await apiFetchPost(
          '/user/signup',
-         {name, email, password, state: stateLoc}
+         { name, email, password, state: stateLoc }
       );
       return json;
    },
@@ -107,7 +137,15 @@ const OlxApi = {
    getAd: async (id, otherAds = false) => {
       const json = await apiFetchGet(
          '/ad/item',
-         {id, other: otherAds}
+         { id, other: otherAds }
+      );
+      return json;
+   },
+   //Postar anúncio
+   addAd: async (fData) => {
+      const json = await apiFetchFile(
+         '/ad/add',
+         fData
       );
       return json;
    }

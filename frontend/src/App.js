@@ -8,7 +8,7 @@ import Footer from './components/partials/Footer'
 
 import './App.css';
 
-import Routes from './Routes'
+import Route from './Routes'
 
 const Page = (props) => {
    return (
@@ -16,7 +16,7 @@ const Page = (props) => {
          <Template>
             <Header />
 
-            <Routes />
+            <Route />
 
             <Footer />
          </Template>

@@ -24,6 +24,8 @@ Query String
 Slide Show
 - npm install react-slideshow-image --save
 
+npm install react-text-mask text-mask-addons --save --force
+
 
 # Uso do Redux nesse Projeto
 - Esse projeto não necessita do uso do redux pois não vai ficar trocando informações entre telas. A maioria das coisas virão do WebService.
