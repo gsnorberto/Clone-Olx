@@ -41,7 +41,8 @@ const apiFetchPost = async (endpoint, body) => {
 
 // *********************************************
 // ************* REQUISIÇÕES GET ***************
-// Obter Estados
+// Obter Estados, Lista de categorias, Lista de
+// items, item específico
 const apiFetchGet = async (endpoint, body = []) => {
    //Verifica se o usuário tem algum token no Cookie
    if (!body.token) {

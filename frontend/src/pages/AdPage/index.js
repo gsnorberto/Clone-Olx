@@ -11,7 +11,7 @@ import AdItem from "../../components/partials/AdItem"
 
 const Page = () => {
    const api = useApi();
-   const { id } = useParams();
+   const { id } = useParams(); //pega o id do item que está na url
 
    const [loading, setLoading] = useState(true);
    const [adInfo, setAdInfo] = useState({});
@@ -23,7 +23,6 @@ const Page = () => {
          setLoading(false);
       }
       getAdInfo(id);
-
    }, []);
 
    const formatDate = (date) => {

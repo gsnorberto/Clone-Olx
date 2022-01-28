@@ -48,6 +48,7 @@ const Page = () => {
       <>
          <SearchArea>
             <PageContainer>
+               {/* ********* CAIXA DE PESQUISA ********* */}
                <div className="searchBox">
                   <form method="GET" action="/ads">
                      <input type="text" name="q" placeholder="O que você procura?" />
@@ -58,8 +59,8 @@ const Page = () => {
                      </select>
                      <button>Pesquisar</button>
                   </form>
-
                </div>
+               {/* ************* CATEGORIAS ************* */}
                <div className="categoryList">
                   {categories.map((category, key) =>
                      <Link key={key} to={`/ads?cat=${category.slug}`} className="categoryItem">
