@@ -55,6 +55,52 @@ export const PageArea = styled.div`
    }
    .rightSide{
       flex: 1;
+
+      h2{
+         margin-top: 0;
+         font-size: 18px;
+      }
+
+      .listWarning{
+         padding: 30px;
+         text-align: center;
+      }
+
+      .list{
+         display: flex;
+         flex-wrap: wrap;
+
+         .aditem{
+            width: 33%;
+         }
+      }
+
+      .pagination{
+         display: flex;
+         align-items: center;
+         justify-content: center;
+         margin: 10px 0;
+         max-width: 100%;
+         flex-wrap: wrap;
+
+         .pageItem{
+            width: 30px;
+            height: 30px;
+            border: 1px solid #999999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            margin-right: 5px;
+            cursor: pointer;
+
+            &:hover,
+            &.active
+            {
+               background-color: #CCCCCC;
+            }
+         }
+      }
    }
    
 `;

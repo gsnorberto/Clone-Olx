@@ -2,7 +2,9 @@ import styled from 'styled-components'
 
 export const FooterArea = styled.div`
    height: 50px;
-   background-color: #CCC;
+   color: #CCCCCC;
+   border-top: 1px solid #CCCCCC;
+   display: flex-en;
 
    .footer{
       height: 50px;
