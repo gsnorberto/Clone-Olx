@@ -30,14 +30,23 @@
 # Uso do Redux nesse Projeto
    - Esse projeto não necessita do uso do redux pois não vai ficar trocando informações entre telas. A maioria das coisas virão do WebService.
 
-# DESAFIO
-   - Criar a tela "Minha conta"
+# DESAFIO (MINHA CONTA)
+   PARTE 1 - INFORMAÇÕES DO USUÁRIO. PARTE 2 - ANÚNCIOS DO USUÁRIO (OPÇÃO DE EDITAR)
+   - Criar a tela "Minha conta" 
 
    # get (retorna as informações do usuário e os anúncios daquele usuário específico)
-      /user/me (token)
+      - 
+      /user/me (token) 
 
-   # put (alterar informações do ucuário)
+   # put (alterar informações do usuário)
       /user/me (token, name, email, state, password)
 
    # post (alterar informações do anúncio)
-      /ad/<id> (token, state, title, category, price, priceNegotiable, description, images, img[])
+      /ad/<id> (token, status, title, category, price, priceNegotiable, description, images, img[])
+         - status (true or false) > ativar e desativar anúncio
+
+# DEPLOY
+   ALTERAR ÍCONE DA PASTA PUBLIC
+   ALTERAR NAME E SHORTNAME DO "MANIFEST.JSON"
+   EM "INDEX.HTML"
+   NPM RUN BUILD

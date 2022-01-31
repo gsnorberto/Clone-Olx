@@ -44,7 +44,7 @@ export const HeaderArea = styled.div`
       ul{
          display: flex;
          align-items: center;
-         height 40px;
+         height: 40px;
       }
       li{
          margin-left: 10px;
@@ -76,4 +76,29 @@ export const HeaderArea = styled.div`
          }
       }
    }
+
+@media (max-width: 600px){
+   /* O próprio item */
+   &{
+      height: auto;
+   }
+   
+   .container{
+      flex-direction: column;
+
+      .logo{
+         justify-content: center;
+         margin: 20px 0;
+      }
+
+      nav ul{
+         flex-direction: column;
+         height: auto;
+      }
+      nav li{
+         margin: 5px 0;
+      }
+   }
+
+}
 `;
