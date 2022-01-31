@@ -14,7 +14,7 @@ const Page = () => {
    const [categories, setCategories] = useState([]);
    const [adList, setAdlist] = useState([]);
 
-   //Carregar lista de Estados
+   // ***********  Carregar lista de Estados ************
    useEffect(() => {
       const getStates = async () => {
          const slist = await api.getStates();
@@ -23,6 +23,7 @@ const Page = () => {
       getStates();
    }, [])
 
+   // **********  Carregar lista de Categorias **********
    //Carregar lista de categorias
    useEffect(() => {
       const getCategories = async () => {
@@ -32,7 +33,7 @@ const Page = () => {
       getCategories();
    }, [])
 
-   //Carregar posts/anúncios
+   // ************  Carregar posts/anúncios *************
    useEffect(() => {
       const getRecentAds = async () => {
          const json = await api.getAds({
@@ -76,7 +77,6 @@ const Page = () => {
             <PageArea>
                <h2>Anúncios Recentes</h2>
                <div className="list">
-                  {/* {console.log(adList)} */}
                      {adList.map((itemList, key)=>
                         <AdItem key={key} data={itemList} />
                      )}

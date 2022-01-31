@@ -6,8 +6,8 @@ import qs from 'qs'
 
 const BASEAPI = 'http://alunos.b7web.com.br:501'
 
-// *********************************************
-// ************ REQUISIÇÕES POST **************
+// ****************************************************
+// **************** REQUISIÇÕES POST ******************
 // Login e Cadastro de novos usuários
 const apiFetchPost = async (endpoint, body) => {
    //Verifica se o usuário tem algum token no Cookie
@@ -27,6 +27,7 @@ const apiFetchPost = async (endpoint, body) => {
       },
       body: JSON.stringify(body)
    })
+
    //Resposta
    const json = await res.json();
 
@@ -39,8 +40,8 @@ const apiFetchPost = async (endpoint, body) => {
    return json;
 }
 
-// *********************************************
-// ************* REQUISIÇÕES GET ***************
+// *****************************************************
+// ***************** REQUISIÇÕES GET *******************
 // Obter Estados, Lista de categorias, Lista de
 // items, item específico
 const apiFetchGet = async (endpoint, body = []) => {
@@ -66,8 +67,8 @@ const apiFetchGet = async (endpoint, body = []) => {
    return json;
 }
 
-// *********************************************
-// ******* REQUISIÇÃO POST COM ARQUIVO *********
+// *****************************************************
+// *********** REQUISIÇÃO POST COM ARQUIVO *************
 const apiFetchFile = async (endpoint, body) => {
    //Verifica se o usuário tem algum token no Cookie
    if (!body.token) {
@@ -82,6 +83,7 @@ const apiFetchFile = async (endpoint, body) => {
       method: 'POST',
       body
    });
+   
    //Resposta
    const json = await res.json();
 
@@ -94,8 +96,11 @@ const apiFetchFile = async (endpoint, body) => {
    return json;
 }
 
+
+// NOTE
+
 const OlxApi = {
-   // Fazer Login
+   // ***************** Fazer Login ********************
    login: async (email, password) => {
       //Faz consulta a WebService
       const json = await apiFetchPost(
@@ -104,7 +109,8 @@ const OlxApi = {
       );
       return json;
    },
-   //Cadastrar usuário
+
+   // *************** Cadastrar Usuário *****************
    register: async (name, email, password, stateLoc) => {
       const json = await apiFetchPost(
          '/user/signup',
@@ -112,21 +118,24 @@ const OlxApi = {
       );
       return json;
    },
-   //Lista de Estados
+
+   // **************** Lista de Estados *****************
    getStates: async () => { //Obter os Estados do Brasil
       const json = await apiFetchGet(
          '/states'
       );
       return json.states;
    },
-   //Lista de categorias. Ex: Eletronic, baby, etc
+
+   // ** Lista de categorias. Ex: Eletronic, baby, etc **
    getCategories: async () => {
       const json = await apiFetchGet(
          '/categories',
       );
       return json.categories;
    },
-   //Lista de items de anúncio
+
+   // ************ Lista de items de anúncio ************
    getAds: async (options) => {
       const json = await apiFetchGet(
          '/ad/list',
@@ -134,7 +143,8 @@ const OlxApi = {
       );
       return json;
    },
-   //Página de um anúncio
+
+   // ************** Página de um anúncio ***************
    getAd: async (id, otherAds = false) => {
       const json = await apiFetchGet(
          '/ad/item',
@@ -142,7 +152,8 @@ const OlxApi = {
       );
       return json;
    },
-   //Postar anúncio
+
+   // **************** Postar um anúncio *****************
    addAd: async (fData) => {
       const json = await apiFetchFile(
          '/ad/add',

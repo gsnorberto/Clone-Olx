@@ -21,6 +21,7 @@ const Page = () => {
    const [disabled, setDisabled] = useState(false);
    const [error, setError] = useState('');
 
+   //  **** OBTER CATEGORIAS: CARROS, ROUPAS, ETC... ****
    useEffect(() => {
       const getCategories = async () => {
          const cats = await api.getCategories();
@@ -29,6 +30,7 @@ const Page = () => {
       getCategories();
    }, [])
 
+   //  ************ SUBMISSÃO DE FORMULÁRIOS ************
    const handleSubmit = async (e) => {
       e.preventDefault(); //Evita enviar formulário em primeira instância
       setDisabled(true) //Desabitilita os campos
@@ -63,6 +65,7 @@ const Page = () => {
 
          const json = await api.addAd(fData);
 
+         //Se não teve erros no preenchimento dos dados
          if(!json.error){
             navigate.push(`/ad/${json.id}`) //manda para o próprio anúncio
             return;

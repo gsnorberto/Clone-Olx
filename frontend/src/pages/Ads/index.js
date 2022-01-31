@@ -19,45 +19,69 @@ const Page = () => {
    };
    const query = useQueryString();
 
-   // "http://localhost:3000/ads?cat=cars"
-   //alert(useLocation().search) //pega toda da queryString. Ex: "?cat=cars"
-   //alert(query.get('cat')) //pega o nome da categoria do item clicado
-
-   //Valor digitado pelo usuário no input da página "Home" é enviado pela queryString e acessada pela "query.get"
+   // *************************************************
+   // ******************** STATES *********************
+   // *************************************************
+   /**
+    * "http://localhost:3000/ads?cat=cars"
+    * alert(useLocation().search) //pega toda da
+    * queryString. Ex: "?cat=cars"
+    * alert(query.get('cat')) //pega o nome da categoria 
+    * do item clicado
+    * Valor digitado pelo usuário no input da página 
+    * "Home" é enviado pela queryString e acessada pela 
+    * "query.get"
+    */
+   //PRODUTO QUE O USUÁRIO PROCURA
    const [q, setQ] = useState(
       query.get('q') != null ? query.get('q') : ''
    );
+   //CATEGORIA (ELETRONICS, CLOTHES ...)
    const [cat, setCat] = useState(
       query.get('cat') != null ? query.get('cat') : ''
    );
+   //ESTADO (SP, PB ...)
    const [stateLoca, setStateLoca] = useState(
       query.get('state') != null ? query.get('state') : ''
    );
-
+   
+   //TOTAL DE ANÚNCIOS
    const [adstotal, setAdstotal] = useState(0);
+   //TOTAL DE PÁGINAS
    const [pageCount, setPageCount] = useState(0);
+   //PAGINA ATUAL
    const [currentPage, setCurrentPage] = useState(1);
-
+   
+   //ESTADOS (LISTA)
    const [stateList, setStateList] = useState([]);
+   //CATEGORIAS (LISTA)
    const [categories, setCategories] = useState([]);
+   //ANÚNCIOS (LISTA)
    const [adList, setAdlist] = useState([]);
-
+   
+   //OPACIDADE DOS ANÚNCIOS (DURANTE E NO TÉRMINO DE CARREGAMENTO)
    const [resultOpacity, setResultOpacity] = useState(1);
+   //ESTADO DO CARREGAMENTO
    const [loading, setLoading] = useState(true);
 
-   /**
-    * sort = Ordena os itens pelos os mais recentes
-    * limit = Limite de itens por págine
-    * q, cat, stateLoca = Filtragem na Pesquisa
-    * offset = pula uma quantidade de anúncios baseado
-    * na quantidade de anúncios que há
-    */
+   // ********************** // ************************
+
+   // *************************************************
+   // *********** OBTER LISTA DE ANÚNCIOS *************
+   // *************************************************
    const getAdsList = async () => {
-
       setLoading(true);
-      /** Página atual - 1 (contagem  a partir do 0) * qnt de itens por página */
-      let offset = (currentPage-1) * 2;
-
+      
+      //POSIÇÃO DO PRIMEIRO ELEMENTO DA PÁGINA CORRESPONDENTE
+      //Pag. atual - 1 (conta a partir do 0) * qnt.itens/pag (deve ser igual ao "limit")
+      let offset = (currentPage - 1) * 3;
+      /**
+       * sort = Ordena os itens pelos os mais recentes
+       * limit = Limite de itens por págine
+       * q, cat, stateLoca = Filtragem na Pesquisa
+       * offset = pula uma quantidade de anúncios baseado
+       * na quantidade de anúncios que há
+       */
       const json = await api.getAds({
          sort: 'desc',
          limit: 3,
@@ -71,8 +95,13 @@ const Page = () => {
       setResultOpacity(1); //Remove a opacidade
       setLoading(false); //Remove mensagem de carregamento
    }
+   // ********************** // ************************
 
-   /** Obter a quantidade de páginas **/
+   // *************************************************
+   // ******************** EFFECTS ********************
+   // *************************************************
+
+   //CALCULAR QUANTIDADE DE PÁGINAS DOS RESULTADOS DA BUSCA
    useEffect(() => {
       if (adList.length > 0) {
          setPageCount(Math.ceil(adstotal / adList.length))
@@ -81,15 +110,13 @@ const Page = () => {
       }
    }, [adstotal]);
 
+   //OBTER LISTA COM TODOS ANÚNCIOS
    useEffect(() => {
       getAdsList();
       setResultOpacity(0.3);
    }, [currentPage]);
 
-   /**
-    * Alterar a queryString da url sempre que o usuário
-    * realizar uma modificação nos campos de entrada.
-    */
+   // MODIFICA A QUERY STRING DA URL A CADA MODIFICAÇÃO NOS INPUTS
    useEffect(() => {
       let queryString = []
 
@@ -116,9 +143,8 @@ const Page = () => {
       navigate(`?${queryString.join('&')}`, { replace: true })
       setCurrentPage(1);
    }, [q, cat, stateLoca]);
-
-
-   /** Carregar lista de Estados **/
+   
+   // CARREGA LISTA DE ESTADOS
    useEffect(() => {
       const getStates = async () => {
          const slist = await api.getStates();
@@ -127,7 +153,7 @@ const Page = () => {
       getStates();
    }, [])
 
-   /** Carregar lista de categorias **/
+   // CARREGAR LISTA DE CATEGORIAS
    useEffect(() => {
       const getCategories = async () => {
          const cats = await api.getCategories();
@@ -135,18 +161,20 @@ const Page = () => {
       }
       getCategories();
    }, [])
-
+   
+   // ARRAY COM A NÚMERAÇÃO DE CADA PÁGINA (1,2,3...)
    let pagination = []
    for (let i = 1; i <= pageCount; i++) {
       pagination.push(i)
    }
+   // ********************** // ************************
 
    return (
       <PageContainer>
          <PageArea>
             <div className="leftSide">
                <form method="GET">
-                  {/* ******* Campos de entrada ******* */}
+                  {/* ****** CAMPO DE DIGITAÇÃO ******* */}
                   <input
                      type="text"
                      name="q"
@@ -154,7 +182,7 @@ const Page = () => {
                      value={q}
                      onChange={e => setQ(e.target.value)}
                   />
-
+                  {/* ******** SELEÇÃO DE ESTADO ******* */}
                   <div className="filterName">Estado: </div>
                   <select name="state" value={stateLoca} onChange={e => setStateLoca(e.target.value)}>
                      <option></option>
@@ -162,7 +190,7 @@ const Page = () => {
                         <option key={key} value={state.name}>{state.name}</option>
                      )}
                   </select>
-                  {/* *********** Categoria *********** */}
+                  {/* *********** CATEGORIA ************ */}
                   <div className="filterName">Categoria: </div>
                   <ul>
                      {categories.map((category, key) =>
@@ -195,12 +223,12 @@ const Page = () => {
                </div>
 
                <div className="pagination">
-                  {pagination.map((i, key) =>
+                  {pagination.map((pageNum, key) =>
                      <div
                         key={key}
-                        className={i === currentPage ? 'pageItem active' : 'pageItem'}
-                        onClick={()=>setCurrentPage(i)}
-                     > {i} </div>
+                        className={pageNum === currentPage ? 'pageItem active' : 'pageItem'}
+                        onClick={() => setCurrentPage(pageNum)}
+                     > {pageNum} </div>
                   )}
                </div>
             </div>
